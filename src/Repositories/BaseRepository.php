@@ -3,13 +3,10 @@
 namespace Luminee\Base\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
-use Vanthink\Base\Helper\CarbonHelper;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class BaseRepository
 {
-    private $_module;
-
     private $_model;
 
     /**
@@ -31,14 +28,14 @@ class BaseRepository
     {
         if ($use_redis) {
             $_models = [];
-            if (file_exists($this->redis_models_path . '/' . $this->_module . '/_models.php')) {
-                $_models = include $this->redis_models_path . '/' . $this->_module . '/_models.php';
+            if (file_exists($this->redis_models_path . '/_models.php')) {
+                $_models = include $this->redis_models_path . '/_models.php';
             }
             if (!isset($_models[$model])) {
-                $_models = include $this->db_models_path . '/' . $this->_module . '/_models.php';
+                $_models = include $this->db_models_path . '/_models.php';
             }
         } else {
-            $_models = include $this->db_models_path . '/' . $this->_module . '/_models.php';
+            $_models = include $this->db_models_path . '/_models.php';
         }
 
         $Model = $_models[$model];
@@ -49,42 +46,16 @@ class BaseRepository
     }
 
     /**
-     * @author wbw
-     */
-    protected function useNativeDB()
-    {
-        $native_db = new NativeDBRepository();
-        return $native_db;
-    }
-
-    /**
      * @author LuminEe
      */
-    protected function _setModel($model_name, $module_name)
+    protected function _setModel($model_name, $path)
     {
-        $_models = include $this->db_models_path . '/' . $module_name . '/_models.php';
+        $_models = include $path . '/_models.php';
         $Model   = $_models[$model_name];
         app()->singleton($Model, function () use ($Model) {
             return new $Model;
         });
         $this->_model = app($Model);
-        return $this;
-    }
-
-    /**
-     * @author LuminEe
-     */
-    protected function bindModule($module_name)
-    {
-        $this->_module = $module_name;
-    }
-
-    /**
-     * @author LuminEe
-     */
-    protected function bindModel($model_name, $use_redis = false)
-    {
-        $this->_model = $this->_bind($model_name, $use_redis);
         return $this;
     }
 
@@ -161,7 +132,7 @@ class BaseRepository
     }
 
     /**
-     * @param \App\Repositories\_BaseRepository $query
+     * @param self $query
      * @param array $params
      * @return array $success
      * @author LuminEe
@@ -1132,7 +1103,7 @@ class BaseRepository
      */
     public function replaceColumn($column, $search, $replace)
     {
-        return $this->_model->update([$column => \DB::raw("REPLACE(" . $column . ", '" . $search . "', '" . $replace . "')")]);
+        return $this->_model->update([$column => \DB::raw("REPLACE($column, '$search', '$replace')")]);
     }
 
     /**
@@ -1217,7 +1188,7 @@ class BaseRepository
      */
     protected function updateIncrement($model_instance, $field, $count = 1, array $array = [])
     {
-        if (empty($model_instance) || !is_object($model_instance)) throw new \Exception('Update Null Error!');
+        $this->checkInstance($model_instance);
         $model_instance->increment($field, $count, $array);
         return $model_instance;
     }
@@ -1236,7 +1207,7 @@ class BaseRepository
      */
     protected function updateDecrement($model_instance, $field, $count = 1, array $array = [])
     {
-        if (empty($model_instance) || !is_object($model_instance)) throw new \Exception('Update Null Error!');
+        $this->checkInstance($model_instance);
         $model_instance->decrement($field, $count, $array);
         return $model_instance;
     }
@@ -1269,9 +1240,18 @@ class BaseRepository
      * @throws \Exception
      * @author LuminEe
      */
+    protected function updateModelByData($model, Array $data)
+    {
+        return $this->updateEntityByModelInstanceWithData($model, $data);
+    }
+
+    /**
+     * @throws \Exception
+     * @author LuminEe
+     */
     protected function updateEntityByModelInstanceWithData($model_instance, Array $data)
     {
-        if (empty($model_instance) || !is_object($model_instance)) throw new \Exception('Update Null Error!');
+        $this->checkInstance($model_instance);
         $model_instance->fill($data)->save();
         return $model_instance;
     }
@@ -1282,7 +1262,7 @@ class BaseRepository
      */
     protected function refreshUpdated($model_instance)
     {
-        if (empty($model_instance) || !is_object($model_instance)) throw new \Exception('Update Null Error!');
+        $this->checkInstance($model_instance);
         return $model_instance->touch();
     }
 
@@ -1292,10 +1272,18 @@ class BaseRepository
      */
     protected function refreshCreated($model_instance)
     {
-        if (empty($model_instance) || !is_object($model_instance)) throw new \Exception('Update Null Error!');
-        $model_instance->created_at = CarbonHelper::now();
+        $this->checkInstance($model_instance);
+        $model_instance->created_at = date('Y-m-d H:i:s');
         $model_instance->save();
         return $model_instance;
+    }
+
+    /**
+     * @throws \Exception
+     */
+    protected function checkInstance($instance)
+    {
+        if (empty($instance) || !is_object($instance)) throw new \Exception('Update Null Error!');
     }
 
     /**
