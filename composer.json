@@ -1,0 +1,28 @@
+{
+    "name": "luminee/laravel-base",
+    "description": "Laravel Base Building",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "LuminEe",
+            "email": "1123462990@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Luminee\\Base\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Luminee\\Base\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "laravel/framework": "5.1.x|5.5.x"
+    }
+}
