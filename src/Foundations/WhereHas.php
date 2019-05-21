@@ -60,7 +60,7 @@ trait WhereHas
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field) {
-                $query->whereRaw("(" . $field . " is NULL or " . $field . " = '')");
+                $query->whereRaw("($field is NULL or $field = '')");
             });
         return $this;
     }
@@ -69,7 +69,7 @@ trait WhereHas
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field) {
-                $query->whereRaw("(" . $field . " is not NULL and " . $field . " <> '')");
+                $query->whereRaw("($field is not NULL and $field <> '')");
             });
         return $this;
     }
@@ -105,7 +105,7 @@ trait WhereHas
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field, $value) {
-                $query->whereRaw("FIND_IN_SET('" . $value . "'," . $field . ")");
+                $query->whereRaw("FIND_IN_SET('$value',$field)");
             });
         return $this;
     }

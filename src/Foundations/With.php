@@ -55,17 +55,21 @@ trait With
 
     protected function withRelationTrashed($relation)
     {
-        $this->_model = $this->_model->with([$relation => function ($query) {
-            $query->withTrashed();
-        }]);
+        if (!empty($relation)) {
+            $this->_model = $this->_model->with([$relation => function ($query) {
+                $query->withTrashed();
+            }]);
+        }
         return $this;
     }
 
     protected function withRelationOnlyTrashed($relation)
     {
-        $this->_model = $this->_model->with([$relation => function ($query) {
-            $query->onlyTrashed();
-        }]);
+        if (!empty($relation)) {
+            $this->_model = $this->_model->with([$relation => function ($query) {
+                $query->onlyTrashed();
+            }]);
+        }
         return $this;
     }
 

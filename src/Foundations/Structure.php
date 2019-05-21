@@ -36,7 +36,7 @@ trait Structure
 
     protected function replaceColumn($column, $search, $replace)
     {
-        return $this->_model->update([$column => \DB::raw("REPLACE($column, '$search', '$replace')")]);
+        return $this->update([$column => \DB::raw("REPLACE($column, '$search', '$replace')")]);
     }
 
     /**
@@ -80,7 +80,7 @@ trait Structure
         unset($updateColumn[0]);
         $whereIn = "";
 
-        $q = "UPDATE " . $this->get_model()->getTable() . " SET ";
+        $q = "UPDATE " . $this->_model->getTable() . " SET ";
         foreach ($updateColumn as $uColumn) {
             $q .= $uColumn . " = CASE ";
             foreach ($multipleData as $data) {

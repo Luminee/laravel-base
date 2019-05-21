@@ -72,19 +72,19 @@ trait Where
 
     protected function whereEmpty($field)
     {
-        $this->_model = $this->_model->whereRaw("(" . $field . " is NULL or " . $field . " = '')");
+        $this->_model = $this->_model->whereRaw("($field is NULL or $field = '')");
         return $this;
     }
 
     protected function whereNotEmpty($field)
     {
-        $this->_model = $this->_model->whereRaw("(" . $field . " is not NULL and " . $field . " <> '')");
+        $this->_model = $this->_model->whereRaw("($field is not NULL and $field <> '')");
         return $this;
     }
 
     protected function whereCommaExpressArray($field, $value)
     {
-        $this->_model = $this->_model->whereRaw("FIND_IN_SET('" . $value . "'," . $field . ")");
+        $this->_model = $this->_model->whereRaw("FIND_IN_SET('$value',$field)");
         return $this;
     }
 

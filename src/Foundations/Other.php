@@ -83,19 +83,20 @@ trait Other
         return $this;
     }
 
-    protected function queryOrderBy($query, $order_by)
+    protected function queryOrderBy($order_by)
     {
         foreach ($order_by as $field => $sort) {
-            $query->orderBy($field, $sort);
+            $this->orderBy($field, $sort);
         }
-        return $query;
+        return $this;
     }
 
-    protected function queryGroupBy($query, $group_by)
+    protected function queryGroupBy($group_by)
     {
         foreach ($group_by as $value) {
-            $query->groupBy($value);
+            $this->groupBy($value);
         }
+        return $this;
     }
 
 }
