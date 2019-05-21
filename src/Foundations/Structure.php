@@ -4,37 +4,37 @@ namespace Luminee\Base\Foundations;
 
 trait Structure
 {
-    public function create(array $data)
+    protected function create(array $data)
     {
         return $this->_model->create($data);
     }
 
-    public function firstOrCreate($data)
+    protected function firstOrCreate($data)
     {
         return $this->_model->firstOrCreate($data);
     }
 
-    public function insert($data)
+    protected function insert($data)
     {
         return $this->_model->insert($data);
     }
 
-    public function update($data)
+    protected function update($data)
     {
         return $this->_model->update($data);
     }
 
-    public function increment($field, $count = 1, array $array = [])
+    protected function increment($field, $count = 1, array $array = [])
     {
         return $this->_model->increment($field, $count, $array);
     }
 
-    public function decrement($field, $count = 1, array $array = [])
+    protected function decrement($field, $count = 1, array $array = [])
     {
         return $this->_model->decrement($field, $count, $array);
     }
 
-    public function replaceColumn($column, $search, $replace)
+    protected function replaceColumn($column, $search, $replace)
     {
         return $this->_model->update([$column => \DB::raw("REPLACE($column, '$search', '$replace')")]);
     }
@@ -42,37 +42,37 @@ trait Structure
     /**
      * @throws \Exception
      */
-    public function updateModelByData($model, Array $data)
+    protected function updateModelByData($model, Array $data)
     {
         if (empty($instance) || !is_object($instance)) throw new \Exception('Update Null Error!');
         $model->fill($data)->save();
         return $model;
     }
 
-    public function delete($id)
+    protected function delete($id)
     {
         if (!is_numeric($id)) return null;
         return (bool)$this->_model->destroy($id);
     }
 
-    public function deleteWhere($return_count = false)
+    protected function deleteWhere($return_count = false)
     {
         if (strstr($this->_model->toSql(), ' 0 = 1 ') !== false) return 0;
         $delete = $this->_model->delete();
         return $return_count ? $delete : (bool)$delete;
     }
 
-    public function forceDeleteWhere()
+    protected function forceDeleteWhere()
     {
         return (bool)$this->_model->forceDelete();
     }
 
-    public function restore()
+    protected function restore()
     {
         return $this->_model->restore();
     }
 
-    public function batchUpdateByFields($multipleData = array(), $fileds = [])
+    protected function batchUpdateByFields($multipleData = array(), $fileds = [])
     {
         if (empty($multipleData)) return false;
         $updateColumn = array_keys($multipleData[0]);

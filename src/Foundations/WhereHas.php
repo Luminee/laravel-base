@@ -4,7 +4,7 @@ namespace Luminee\Base\Foundations;
 
 trait WhereHas
 {
-    public function whereHas($relation, $field, $value, $equal = '=')
+    protected function whereHas($relation, $field, $value, $equal = '=')
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field, $value, $equal) {
@@ -13,14 +13,14 @@ trait WhereHas
         return $this;
     }
 
-    public function whereHasMorph($relation, $field, $value, $equal = '=')
+    protected function whereHasMorph($relation, $field, $value, $equal = '=')
     {
         $this->_model = $this->_model
             ->whereHasMorph($relation, $field, $value, $equal);
         return $this;
     }
 
-    public function whereHasIn($relation, $field, $array)
+    protected function whereHasIn($relation, $field, $array)
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field, $array) {
@@ -29,7 +29,7 @@ trait WhereHas
         return $this;
     }
 
-    public function whereHasNotIn($relation, $field, $array)
+    protected function whereHasNotIn($relation, $field, $array)
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field, $array) {
@@ -38,7 +38,7 @@ trait WhereHas
         return $this;
     }
 
-    public function whereHasNull($relation, $field)
+    protected function whereHasNull($relation, $field)
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field) {
@@ -47,7 +47,7 @@ trait WhereHas
         return $this;
     }
 
-    public function whereHasNotNull($relation, $field)
+    protected function whereHasNotNull($relation, $field)
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field) {
@@ -56,7 +56,7 @@ trait WhereHas
         return $this;
     }
 
-    public function whereHasEmpty($relation, $field)
+    protected function whereHasEmpty($relation, $field)
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field) {
@@ -65,7 +65,7 @@ trait WhereHas
         return $this;
     }
 
-    public function whereHasNotEmpty($relation, $field)
+    protected function whereHasNotEmpty($relation, $field)
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field) {
@@ -74,7 +74,7 @@ trait WhereHas
         return $this;
     }
 
-    public function whereHasBetween($relation, $field, $between)
+    protected function whereHasBetween($relation, $field, $between)
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field, $between) {
@@ -83,7 +83,7 @@ trait WhereHas
         return $this;
     }
 
-    public function whereHasKeyBetween($relation, $key, $between)
+    protected function whereHasKeyBetween($relation, $key, $between)
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($key, $between) {
@@ -92,7 +92,7 @@ trait WhereHas
         return $this;
     }
 
-    public function whereHasKeyValue($relation, $key, $value, $equal = '=')
+    protected function whereHasKeyValue($relation, $key, $value, $equal = '=')
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($key, $value, $equal) {
@@ -101,7 +101,7 @@ trait WhereHas
         return $this;
     }
 
-    public function whereHasCommaExpressArray($relation, $field, $value)
+    protected function whereHasCommaExpressArray($relation, $field, $value)
     {
         $this->_model = $this->_model
             ->whereHas($relation, function ($query) use ($field, $value) {

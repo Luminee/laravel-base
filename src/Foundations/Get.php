@@ -4,58 +4,58 @@ namespace Luminee\Base\Foundations;
 
 trait Get
 {
-    public function find($id)
+    protected function find($id)
     {
         if (!is_numeric($id)) return null;
         return $this->_model->find($id);
     }
 
-    public function getFirst()
+    protected function getFirst()
     {
         return $this->_model->first();
     }
 
-    public function getCollection()
+    protected function getCollection()
     {
         return $this->_model->get();
     }
 
-    public function listField($field, $alias = null)
+    protected function listField($field, $alias = null)
     {
         return $this->_model->lists($field, $alias);
     }
 
-    public function getCount($columns = '*')
+    protected function getCount($columns = '*')
     {
         return $this->_model->count($columns);
     }
 
-    public function getSum($columns)
+    protected function getSum($columns)
     {
         return $this->_model->sum($columns);
     }
 
-    public function getMax($columns)
+    protected function getMax($columns)
     {
         return $this->_model->max($columns);
     }
 
-    public function getMin($columns)
+    protected function getMin($columns)
     {
         return $this->_model->min($columns);
     }
 
-    public function getAvg($columns)
+    protected function getAvg($columns)
     {
         return $this->_model->avg($columns);
     }
 
-    public function getPaginate($perPage, $nowPage = 1, $columns = ['*'], $pageName = 'page')
+    protected function getPaginate($perPage, $nowPage = 1, $columns = ['*'], $pageName = 'page')
     {
         return $this->_model->paginate($perPage, $columns, $pageName, $nowPage);
     }
 
-    public function getPagination($perPage, $nowPage = 1, $columns = ['*'], $pageName = 'page')
+    protected function getPagination($perPage, $nowPage = 1, $columns = ['*'], $pageName = 'page')
     {
         $total = $this->_model->count($columns);
         $paginate = $this->_model->paginate($perPage, $columns, $pageName, $nowPage);
@@ -63,7 +63,7 @@ trait Get
         return $paginate;
     }
 
-    public function getPaginationForUnion($perPage, $nowPage = 1)
+    protected function getPaginationForUnion($perPage, $nowPage = 1)
     {
         $items = $this->_model->get();
         $slice = $items->slice($perPage * ($nowPage - 1), $perPage)->all();
@@ -72,7 +72,7 @@ trait Get
         return $paginate;
     }
 
-    public function getCollectionOrPaginate(self $query, $params)
+    protected function getCollectionOrPaginate(self $query, $params)
     {
         if (isset($params['perPage'])) {
             return $query->getPaginate($params['perPage'], isset($params['nowPage']) ? $params['nowPage'] : 1);

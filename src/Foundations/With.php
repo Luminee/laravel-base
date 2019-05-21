@@ -4,25 +4,25 @@ namespace Luminee\Base\Foundations;
 
 trait With
 {
-    public function withRelated($relation)
+    protected function withRelated($relation)
     {
         if (!empty($relation)) $this->_model = $this->_model->with($relation);
         return $this;
     }
 
-    public function withRelatedOnWrite($relation)
+    protected function withRelatedOnWrite($relation)
     {
         if (!empty($relation)) $this->_model = $this->_model->withRelatedOnWrite($relation);
         return $this;
     }
 
-    public function withCertain($relation, Array $columns)
+    protected function withCertain($relation, Array $columns)
     {
         if (!empty($relation)) $this->_model = $this->_model->withCertain($relation, $columns);
         return $this;
     }
 
-    public function withRelatedWhere($relation, $field, $value, $equal = '=')
+    protected function withRelatedWhere($relation, $field, $value, $equal = '=')
     {
         if (!empty($relation)) {
             $this->_model = $this->_model->with([$relation => function ($query) use ($field, $value, $equal) {
@@ -33,7 +33,7 @@ trait With
         return $this;
     }
 
-    public function withRelatedWhereIn($relation, $field, $array)
+    protected function withRelatedWhereIn($relation, $field, $array)
     {
         if (!empty($relation)) {
             $this->_model = $this->_model->with([$relation => function ($query) use ($field, $array) {
@@ -43,7 +43,7 @@ trait With
         return $this;
     }
 
-    public function withRelatedWhereNotNull($relation, $field)
+    protected function withRelatedWhereNotNull($relation, $field)
     {
         if (!empty($relation)) {
             $this->_model = $this->_model->with([$relation => function ($query) use ($field) {
@@ -53,7 +53,7 @@ trait With
         return $this;
     }
 
-    public function withRelationTrashed($relation)
+    protected function withRelationTrashed($relation)
     {
         $this->_model = $this->_model->with([$relation => function ($query) {
             $query->withTrashed();
@@ -61,7 +61,7 @@ trait With
         return $this;
     }
 
-    public function withRelationOnlyTrashed($relation)
+    protected function withRelationOnlyTrashed($relation)
     {
         $this->_model = $this->_model->with([$relation => function ($query) {
             $query->onlyTrashed();
@@ -69,7 +69,7 @@ trait With
         return $this;
     }
 
-    public function withRelatedOrderBy($relation, $order_by, $sort = 'asc')
+    protected function withRelatedOrderBy($relation, $order_by, $sort = 'asc')
     {
         if (!empty($relation)) {
             $this->_model = $this->_model->with([$relation => function ($query) use ($order_by, $sort) {

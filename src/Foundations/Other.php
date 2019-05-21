@@ -4,25 +4,25 @@ namespace Luminee\Base\Foundations;
 
 trait Other
 {
-    public function orderBy($field, $sort = 'asc')
+    protected function orderBy($field, $sort = 'asc')
     {
         $this->_model = $this->_model->orderBy($field, $sort);
         return $this;
     }
 
-    public function orderByRaw($query, Array $param = [])
+    protected function orderByRaw($query, Array $param = [])
     {
         $this->_model = $this->_model->orderByRaw($query, $param);
         return $this;
     }
 
-    public function groupBy($field)
+    protected function groupBy($field)
     {
         $this->_model = $this->_model->groupBy($field);
         return $this;
     }
 
-    public function having($field, $value, $equal = null)
+    protected function having($field, $value, $equal = null)
     {
         $this->_model = $this->_model->having($field, $equal, $value);
         return $this;
@@ -34,56 +34,56 @@ trait Other
         return $this;
     }
 
-    public function selectDistinct($field)
+    protected function selectDistinct($field)
     {
         $this->_model = $this->_model->selectRaw("distinct ($field)");
         return $this;
     }
 
-    public function selectRaw($query, Array $param = [])
+    protected function selectRaw($query, Array $param = [])
     {
         $this->_model = $this->_model->selectRaw($query, $param);
         return $this;
     }
 
-    public function addSelect($field)
+    protected function addSelect($field)
     {
         $this->_model = $this->_model->addSelect($field);
         return $this;
     }
 
-    public function limit($rows, $offset = 0)
+    protected function limit($rows, $offset = 0)
     {
         $this->_model = $this->_model->skip($offset)->take($rows);
         return $this;
     }
 
-    public function union($query)
+    protected function union($query)
     {
         $this->_model = $this->_model->union($query);
         return $this;
     }
 
 
-    public function distinct()
+    protected function distinct()
     {
         $this->_model = $this->_model->distinct();
         return $this;
     }
 
-    public function orderByStringAsInt($field, $sort = 'asc')
+    protected function orderByStringAsInt($field, $sort = 'asc')
     {
         $this->_model = $this->_model->orderByRaw("CAST(`$field` AS DECIMAL) $sort");
         return $this;
     }
 
-    public function orderByArrayList($field, $array, $sort = 'asc')
+    protected function orderByArrayList($field, $array, $sort = 'asc')
     {
         $this->_model = $this->_model->orderByRaw("FIND_IN_SET($field,'$array') $sort");
         return $this;
     }
 
-    public function queryOrderBy($query, $order_by)
+    protected function queryOrderBy($query, $order_by)
     {
         foreach ($order_by as $field => $sort) {
             $query->orderBy($field, $sort);
@@ -91,7 +91,7 @@ trait Other
         return $query;
     }
 
-    public function queryGroupBy($query, $group_by)
+    protected function queryGroupBy($query, $group_by)
     {
         foreach ($group_by as $value) {
             $query->groupBy($value);
