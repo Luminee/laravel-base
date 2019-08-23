@@ -22,7 +22,8 @@ trait Get
 
     protected function listField($field, $alias = null)
     {
-        return $this->_model->lists($field, $alias);
+        $method = method_exists($this->_model, 'lists') ? 'lists' : 'pluck';
+        return $this->_model->$method($field, $alias);
     }
 
     protected function getCount($columns = '*')

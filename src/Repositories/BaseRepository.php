@@ -97,13 +97,6 @@ class BaseRepository
 
     protected function select($select)
     {
-        if (!is_array($select)) {
-            $select = $this->getTableField($select);
-        } else {
-            foreach ($select as &$field) {
-                $field = $this->getTableField($field);
-            }
-        }
         $this->_model = $this->_model->select($select);
         return $this;
     }
