@@ -4,14 +4,14 @@ namespace Luminee\Base\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class ModuleMigrateCommand extends Command
+class ProviderMigrateCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'luminee:module:migrate {provider}';
+    protected $signature = 'luminee:provider:migrate {provider}';
     
     /**
      * The console command description.
