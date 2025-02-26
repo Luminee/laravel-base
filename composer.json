@@ -23,6 +23,12 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "laravel/framework": ">=10.10"
+        "php": ">=7.0",
+        "laravel/framework": "5.5.*"
+    },
+    "config": {
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
     }
 }

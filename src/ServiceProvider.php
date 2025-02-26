@@ -13,11 +13,11 @@ class ServiceProvider extends _ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('command.luminee.base.migrate', function () {
-            return new \Luminee\Base\Console\Commands\ModuleMigrateCommand();
+        $this->app->singleton('command.luminee.base.provider.migrate', function () {
+            return new \Luminee\Base\Console\Commands\ProviderMigrateCommand();
         });
     
-        $this->commands('command.luminee.base.migrate');
+        $this->commands('command.luminee.base.provider.migrate');
         
     }
 }
